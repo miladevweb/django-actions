@@ -32,6 +32,7 @@ jobs:
           docker push milaro/nginx-server:latest
 
   deploy:
+    needs: create-docker-image
     runs-on: ubuntu-latest
     steps:
       - name: Docker Compose
