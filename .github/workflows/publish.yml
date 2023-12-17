@@ -17,20 +17,19 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_EXAMPLE }}
-          extend-dockerfile: true
 
       - name: Build and Push docker Images
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
-          docker build -t milaro/django-server:latest .
-          docker build -t milaro/nginx-server:latest ./nginx
+          docker build -t ghcr.io/milaro/django-server:latest .
+          docker build -t ghcr.io/milaro/nginx-server:latest ./nginx
 
           echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
-          docker push milaro/django-server:latest
-          docker push milaro/nginx-server:latest
+          docker push ghcr.io/milaro/django-server:latest
+          docker push ghcr.io/milaro/nginx-server:latest
 
   deploy:
     needs: create-docker-image
