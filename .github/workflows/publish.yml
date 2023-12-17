@@ -26,7 +26,7 @@ jobs:
           docker build . -t ghcr.io/milaro/django-server:latest 
           docker build . -t ghcr.io/milaro/nginx-server:latest -f nginx/Dockerfile
 
-
+          docker login ghcr.io -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{secrets.DOCKERHUB_TOKEN}}
 
           docker push ghcr.io/milaro/django-server:latest
           docker push ghcr.io/milaro/nginx-server:latest
