@@ -1,0 +1,48 @@
+# Virtual environment
+venv/
+
+# IDE files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Compiled Python files
+*.pyc
+
+# Django migration files
+*.sqlite3
+*.pyc
+__pycache__/
+db.sqlite3
+
+# Secret key
+*.secret_key
+
+# Development/Environment specific settings
+.env
+.env.example
+local_settings.py
+
+# Media files
+media/
+
+# Static files
+static/
+staticfiles/
+
+# Log files
+*.log
+
+# Dependency directories
+lib/
+lib64/
+bin/
+
+# Compiled bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore the pipenv virtual environment
+Pipfile.lock

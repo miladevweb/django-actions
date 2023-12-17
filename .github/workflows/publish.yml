@@ -1,0 +1,51 @@
+name: Deploy to Production
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+jobs:
+  create-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_EXAMPLE }}
+
+      - name: Build and Push docker Images
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker build -t milaro/django-server:latest .
+          docker build -t milaro/nginx-server:latest ./nginx
+
+          echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
+          docker push milaro/django-server:latest
+          docker push milaro/nginx-server:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Compose
+        run: |
+          git pull origin main
+          docker-compose -f docker-compose.production.yml build
+          docker-compose -f docker.compose.production.yml run server sh
+          python manage.py makemigrations
+          python manage.py migrate
+          exit
+          docker-compose -f docker-compose.production.yml up -d
+
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{secrets.MY_RENDER_SERVICE_ID}}
+          api-key: ${{secrets.MY_RENDER_API_KEY}}

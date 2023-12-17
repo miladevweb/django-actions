@@ -1,0 +1,37 @@
+services:
+   server:
+      build:
+         context: .
+      volumes:
+         - .:/app
+      env_file:
+         - .env
+      depends_on:
+         - database
+      command: sh -c "python manage.py collectstatic --noinput && gunicorn core.wsgi:application --bind 0.0.0.0:8000"
+
+   database:
+      image: postgres
+      ports:
+         - 5432:5432
+      environment:
+         - POSTGRES_PASSWORD=password
+         - POSTGRES_USER=username
+         - POSTGRES_DB=mydb
+      restart: always
+      volumes:
+         - postgres_data:/var/lib/postgresql/data
+   nginx:
+      build:
+         context: ./nginx
+      ports:
+         - 80:80
+      volumes:
+         - ./nginx/conf.d:/etc/nginx/conf.d
+         # this is the file route in My PC:nginx docker server, /static/ go on "alias"
+         - ./staticfiles:/static
+      depends_on:
+         - server
+
+volumes:
+   postgres_data:

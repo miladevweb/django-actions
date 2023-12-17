@@ -1,0 +1,99 @@
+{% extends "base.html" %} {% block title %}Home Page{% endblock title %} {% block body %}
+<a
+   href="{% url 'create-user' %}"
+   class="create"
+   >CREAR</a
+>
+
+<section>
+   {% for object in object_list %}
+   <div class="container">
+      <div class="username">{{ object.username }}</div>
+
+      <div class="info">
+         <span>Email: {{ object.email }}</span>
+         <span>id: {{ object.id }}</span>
+      </div>
+      <picture>
+         <img
+            src="{{ object.get_thumbnail_url }}"
+            alt="any alt"
+         />
+      </picture>
+
+      <a
+         href="{% url 'update-user' object.pk %}"
+         class="update"
+         >Update Profile</a
+      >
+   </div>
+   {% endfor %}
+</section>
+
+<style>
+   picture {
+      width: 100px;
+      height: 100px;
+      display: block;
+      margin-block: 0.7rem;
+      margin-inline: auto;
+
+      & img {
+         border-radius: 5%;
+      }
+   }
+   .username {
+      font-size: 3rem;
+      font-family: var(--roboto);
+      font-weight: var(--black);
+      width: fit-content;
+      margin-inline: auto;
+   }
+   .create {
+      background: linear-gradient(to right, hsl(180 80% 20%), hsl(190 80% 30%));
+      width: fit-content;
+      padding-inline: 7px;
+      padding-block: 3px;
+      border-radius: 3px;
+      font-family: var(--roboto);
+      font-weight: var(--semibold);
+      display: inline-block;
+      color: hsl(0 0% 100% / 73%);
+      transition: color 0.7s ease-in, transform 0.5s ease-in-out;
+
+      &:hover {
+         color: white;
+         transform: scale(105%);
+      }
+   }
+   section {
+      border: 1px solid hsl(var(--primary-color) / 70%);
+      min-height: 85vh;
+      width: 60%;
+      margin-inline: auto;
+      background: hsl(var(--light-primary-color));
+      padding: 2rem 2.7rem;
+      border-radius: 0.8rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      justify-items: center;
+   }
+   .container {
+      margin-bottom: 1.6rem;
+      width: fit-content;
+      padding: 0 2rem;
+
+      & .info {
+         display: grid;
+         grid-template-columns: 1fr;
+         justify-items: center;
+         gap: 0.2rem;
+      }
+   }
+   .update {
+      display: block;
+      width: fit-content;
+      margin-inline: auto;
+   }
+</style>
+{% endblock body %}

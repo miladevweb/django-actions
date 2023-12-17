@@ -1,0 +1,10 @@
+Django==4.2.2
+django-cors-headers==4.1.0
+Pillow==10.0.0
+
+django-environ==0.9.0
+dj-database-url==2.1.0
+psycopg2-binary==2.9.9
+
+Pyrebase==3.0.27
+gunicorn==21.2.0
