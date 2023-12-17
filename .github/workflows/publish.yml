@@ -23,8 +23,8 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
-          docker build -t ghcr.io/milaro/django-server:latest .
-          docker build -t ghcr.io/milaro/nginx-server:latest ./nginx
+          docker build . -t ghcr.io/milaro/django-server:latest 
+          docker build . -t ghcr.io/milaro/nginx-server:latest -f nginx/Dockerfile
 
           echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
