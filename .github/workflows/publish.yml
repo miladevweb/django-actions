@@ -30,9 +30,10 @@ jobs:
     steps:
       - name: Docker Compose
         run: |
-          echo ls
-          sudo docker-compose -f ./docker-compose.production.yml build
-          sudo docker-compose -f ./docker-compose.production.yml run server sh
+
+          sudo ls
+          sudo docker-compose -f docker-compose.production.yml build
+          sudo docker-compose -f docker-compose.production.yml run server sh
           python manage.py makemigrations
           python manage.py migrate
           exit
