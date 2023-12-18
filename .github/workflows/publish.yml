@@ -28,10 +28,9 @@ jobs:
     needs: create-docker-image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: JorgeLNJunior/render-deploy@v1.4.3
+      - name: Trigger deployment
+        uses: sws2apps/render-deployment@main #consider using pin for dependabot auto update
         with:
-          service_id: ${{ secrets.MY_RENDER_SERVICE_ID }} # required
-          api_key: ${{ secrets.MY_RENDER_API_KEY }} # required
-          clear_cache: false
-          wait_deploy: false
+          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_API_KEY }}
+          multipleDeployment: false
