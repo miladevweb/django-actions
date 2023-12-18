@@ -28,17 +28,6 @@ jobs:
     needs: create-docker-image
     runs-on: ubuntu-latest
     steps:
-      - name: Docker Compose
-        run: |
-
-          sudo ls
-          sudo docker-compose -f docker-compose.production.yml build
-          sudo docker-compose -f docker-compose.production.yml run server sh
-          python manage.py makemigrations
-          python manage.py migrate
-          exit
-          docker-compose -f docker-compose.production.yml up -d
-
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
