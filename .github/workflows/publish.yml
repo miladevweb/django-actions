@@ -16,13 +16,13 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
-          docker build . -t milaro/django-server:latest 
-          docker build . -t milaro/nginx-server:latest -f nginx/Dockerfile
+          docker build . -t $DOCKERHUB_USERNAME/django-server:latest 
+          docker build . -t $DOCKERHUB_USERNAME/nginx-server:latest -f nginx/Dockerfile
 
           echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
-          docker push milaro/django-server:latest
-          docker push milaro/nginx-server:latest
+          docker push $DOCKERHUB_USERNAME/django-server:latest
+          docker push $DOCKERHUB_USERNAME/nginx-server:latest
 
   deploy:
     needs: create-docker-image
