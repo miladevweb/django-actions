@@ -28,9 +28,12 @@ jobs:
     needs: create-docker-image
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
-        uses: bankfliptech/deploy-to-render@v1
+      - name: Wait for Render Deployment
+        uses: bounceapp/render-action@0.6.0
         with:
-          serviceId: ${{ secrets.MY_RENDER_SERVICE_ID }}
-          apiKey: ${{ secrets.MY_RENDER_API_KEY }}
-          deployHookURL: ${{ secrets.MY_RENDER_DEPLOY_HOOK_URL }}
+          render-token: ${{ secrets.MY_RENDER_API_KEY }}
+          github-token: ${{ secrets.DOCKER_EXAMPLE }}
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          retries: 20
+          wait: 16000
+          sleep: 30000
