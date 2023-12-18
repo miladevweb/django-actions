@@ -28,7 +28,9 @@ jobs:
     needs: create-docker-image
     runs-on: ubuntu-latest
     steps:
-      - uses: ttskch/render-deploy@v1.0.0
+      - name: Deploy
+        uses: bankfliptech/deploy-to-render@v1
         with:
-          api-key: ${{ secrets.MY_RENDER_API_KEY }}
-          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          serviceId: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          apiKey: ${{ secrets.MY_RENDER_API_KEY }}
+          deployHookURL: ${{ secrets.MY_RENDER_DEPLOY_HOOK_URL }}
