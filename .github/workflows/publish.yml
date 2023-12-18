@@ -28,9 +28,7 @@ jobs:
     needs: create-docker-image
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger deployment
-        uses: sws2apps/render-deployment@main #consider using pin for dependabot auto update
+      - uses: ttskch/render-deploy@v1.0.0
         with:
-          serviceId: ${{ secrets.MY_RENDER_SERVICE_ID }}
-          apiKey: ${{ secrets.MY_RENDER_API_KEY }}
-          multipleDeployment: false
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
