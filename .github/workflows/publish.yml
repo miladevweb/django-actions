@@ -30,6 +30,7 @@ jobs:
     steps:
       - name: Docker Compose
         run: |
+          ls
           docker-compose -f docker-compose.production.yml build
           docker-compose -f docker-compose.production.yml run server sh
           python manage.py makemigrations
